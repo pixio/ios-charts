@@ -454,51 +454,24 @@ public class ChartYAxisRenderer: ChartAxisRendererBase
             // if drawing the limit-value label is enabled
             if (l.drawLabelEnabled && label.characters.count > 0)
             {
-                let labelLineHeight = l.valueFont.lineHeight
-                
-                let xOffset: CGFloat = 4.0 + l.xOffset
-                let yOffset: CGFloat = l.lineWidth + labelLineHeight + l.yOffset
-                
-                if (l.labelPosition == .RightTop)
-                {
-                    ChartUtils.drawText(context: context,
-                        text: label,
-                        point: CGPoint(
-                            x: viewPortHandler.contentRight - xOffset,
-                            y: position.y - yOffset),
-                        align: .Right,
-                        attributes: [NSFontAttributeName: l.valueFont, NSForegroundColorAttributeName: l.valueTextColor])
-                }
-                else if (l.labelPosition == .RightBottom)
-                {
-                    ChartUtils.drawText(context: context,
-                        text: label,
-                        point: CGPoint(
-                            x: viewPortHandler.contentRight - xOffset,
-                            y: position.y + yOffset - labelLineHeight),
-                        align: .Right,
-                        attributes: [NSFontAttributeName: l.valueFont, NSForegroundColorAttributeName: l.valueTextColor])
-                }
-                else if (l.labelPosition == .LeftTop)
-                {
-                    ChartUtils.drawText(context: context,
-                        text: label,
-                        point: CGPoint(
-                            x: viewPortHandler.contentLeft + xOffset,
-                            y: position.y - yOffset),
-                        align: .Left,
-                        attributes: [NSFontAttributeName: l.valueFont, NSForegroundColorAttributeName: l.valueTextColor])
-                }
-                else
-                {
-                    ChartUtils.drawText(context: context,
-                        text: label,
-                        point: CGPoint(
-                            x: viewPortHandler.contentLeft + xOffset,
-                            y: position.y + yOffset - labelLineHeight),
-                        align: .Left,
-                        attributes: [NSFontAttributeName: l.valueFont, NSForegroundColorAttributeName: l.valueTextColor])
-                }
+                let rightMargin = CGFloat(2.0)
+
+                let radius = l.labelCircleRadius
+                let center = CGPoint(x: viewPortHandler.contentRight - rightMargin - radius, y: position.y)
+                let rect = CGRect(x: center.x - radius, y: center.y - radius, width: radius*2.0, height: radius*2.0)
+                CGContextSetFillColorWithColor(context, l.lineColor.CGColor)
+                CGContextFillEllipseInRect(context, rect)
+
+                let attributes = [NSFontAttributeName: l.valueFont, NSForegroundColorAttributeName: l.valueTextColor]
+
+                let textSize = (label as NSString).sizeWithAttributes(attributes)
+                let xDiff = rect.width - textSize.width
+                let yDiff = rect.height - textSize.height
+
+                let realRect = CGRect(x: rect.origin.x + xDiff*0.5, y: rect.origin.y + yDiff*0.5, width: textSize.width, height: textSize.height)
+
+                (label as NSString).drawWithRect(realRect, options: .UsesLineFragmentOrigin, attributes: attributes, context: nil)
+
             }
         }
         
