@@ -39,8 +39,8 @@ public class ChartLimitLine: ChartComponentBase
     public var valueTextColor = NSUIColor.blackColor()
     public var valueFont = NSUIFont.systemFontOfSize(13.0)
     public var label = ""
-    public var drawLabelEnabled = true
     public var labelPosition = LabelPosition.RightTop
+    public var labelCircleRadius = CGFloat(8.0)
     
     public override init()
     {
