@@ -38,6 +38,7 @@ public class ChartLimitLine: ComponentBase
     public var label = ""
     public var drawLabelEnabled = true
     public var labelPosition = LabelPosition.RightTop
+    public var labelCircleRadius = CGFloat(8.0)
     
     public override init()
     {
