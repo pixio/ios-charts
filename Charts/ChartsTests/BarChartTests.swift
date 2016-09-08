@@ -1,5 +1,5 @@
 import XCTest
-import FBSnapshotTestCase
+//import FBSnapshotTestCase
 @testable import Charts
 
 class BarChartTests: FBSnapshotTestCase
