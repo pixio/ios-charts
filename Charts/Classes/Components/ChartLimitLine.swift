@@ -33,14 +33,17 @@ open class ChartLimitLine: ChartComponentBase
     open var limit = Double(0.0)
     
     private var _lineWidth = CGFloat(2.0)
-    open var lineColor = NSUIColor(red: 237.0/255.0, green: 91.0/255.0, blue: 91.0/255.0, alpha: 1.0)
+
+    public var lineColor = NSUIColor(red: 237.0/255.0, green: 91.0/255.0, blue: 91.0/255.0, alpha: 1.0)
     open var lineDashPhase = CGFloat(0.0)
     open var lineDashLengths: [CGFloat]?
-    open var valueTextColor = NSUIColor.black
-    open var valueFont = NSUIFont.systemFont(ofSize: 13.0)
+    open var valueTextColor = NSUIColor.blackColor()
+    open var valueFont = NSUIFont.systemFontOfSize(13.0)
     open var label = ""
     open var drawLabelEnabled = true
-    open var labelPosition = LabelPosition.rightTop
+    open var labelPosition = LabelPosition.RightTop
+    open var labelCircleRadius = CGFloat(8.0)
+
     
     public override init()
     {
